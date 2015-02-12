@@ -307,7 +307,7 @@ POOL_PARTS = {
     },
     'kibana_ssl': {
         'port': 8443,
-        'backend_port': 443,
+        'backend_port': 8443,
         'mon_type': '/RPC/RPC_MON_TCP_KIBANA_SSL',
         'group': 'kibana',
         'priority': True,
