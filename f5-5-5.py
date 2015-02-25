@@ -137,7 +137,6 @@ PUB_NONSSL_VIRTUAL_ENTRIES = (
     r' profiles replace-all-with { /Common/fastL4 { } }'
     ' %(persist)s'
     ' source-address-translation { pool /RPC/RPC_SNATPOOL type snat }'
-    ' { pool /RPC/RPC_SNATPOOL type snat }'
     ' }'
 )
 
@@ -569,7 +568,7 @@ def main():
             ' /RPC/RPC_PROF_SSL_%(ssl_domain_name)s'
             ' { cert /RPC/%(ssl_domain_name)s.crt key'
             ' /RPC/%(ssl_domain_name)s.key defaults-from clientssl }\n'
-            'create ltm profile server-ssl RPC_PROF_SSL_SERVER { defaults-from /Common/serverssl }\n'
+            'create ltm profile server-ssl /RPC/RPC_PROF_SSL_SERVER { defaults-from /Common/serverssl }\n'
             % user_args,
         ])
     if user_args['Superman']:
@@ -630,7 +629,7 @@ def main():
             if user_args['ssl_public_ip']:
                 if not value.get('backend_ssl'):
                     virtual_dict['ssl_profiles'] = (
-                        '/RPC/RPC_PROF_SSL_%(ssl_domain_name)s { context clientside } }'
+                        '/RPC/RPC_PROF_SSL_%(ssl_domain_name)s { context clientside }'
                     ) % user_args
                 else:
                     virtual_dict['ssl_profiles'] = '/RPC/RPC_PROF_SSL_SERVER { context serverside } /RPC/RPC_PROF_SSL_%(ssl_domain_name)s { context clientside }'% user_args
@@ -747,4 +746,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
